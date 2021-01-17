@@ -24,7 +24,7 @@ class App extends React.Component{
        error: false
        //  main: undefined,
     }
-    this.getWeather(); //获取实时天气数据，成为静态数据
+  
 
     this.weatherIcon = { //不同的key，对应的className的value不同，静态
       Thunderstorm: "wi-thunderstorm",
@@ -111,7 +111,7 @@ class App extends React.Component{
     const {city, country, celsius, temp_max,temp_min, description, icon } = this.state
     return (
       <div className="App">
-        <Form></Form>
+        <Form loadweather = {this.getWeather}></Form> 
         <WeatherComp 
         city = {city} 
         country = {country}

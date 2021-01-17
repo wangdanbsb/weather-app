@@ -4,7 +4,7 @@ function WeatherComp(props) {
     const {city, country, icon, celsius, temp_max,temp_min, description } = props
     return (
         <div className = "container">
-            <div className = "cards">
+            <div className = "cards pt-4">
                 <h1>{city}, {country}</h1>
 
                 <h5 className = "py-4"> 
