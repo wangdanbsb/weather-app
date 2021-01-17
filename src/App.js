@@ -1,31 +1,32 @@
 
 import React from 'react'
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css" //this file is under the folder node_modules
-import "weather-icons/css/weather-icons.css"
-import WeatherComp from './components/WeatherComp';
-//api call api.openweathermap.org/data/2.5/weather?q=London&appid={API key}
+import "bootstrap/dist/css/bootstrap.min.css" //this file is under the folder node_modules, this project uses bootstrap
+import "weather-icons/css/weather-icons.css" // this project uses weather icon, import this to use className
+import WeatherComp from './components/WeatherComp'; // import child component
+import Form from './components/Form'
+
 
 const API_key = "bba35184e0fbcba66550ea1e8af36eca"
 
 class App extends React.Component{
+  //设置静态数据
   constructor(props) {
     super(props)
-  
     this.state = {
        city: undefined,
        country: undefined,
        icon: undefined,
-       main: undefined,
        celsius: undefined,
        temp_max: undefined,
        temp_min: undefined,
        description: "",
        error: false
-
+       //  main: undefined,
     }
-    this.getWeather();
-    this.weatherIcon = {
+    this.getWeather(); //获取实时天气数据，成为静态数据
+
+    this.weatherIcon = { //不同的key，对应的className的value不同，静态
       Thunderstorm: "wi-thunderstorm",
       Drizzle: "wi-sleet",
       Rain: "wi-storm-showers",
@@ -36,12 +37,30 @@ class App extends React.Component{
     }
   }
 
+  //create a method to get weather,不理解async和await用法
+  getWeather = async() => {
+    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_key}`)
+    const response = await api_call.json() //把获得的数据转为JSON格式
+
+    console.log(response) //在console看到获取的所有数据
+    
+    this.setState({
+      city: response.name,
+      country: response.sys.country,
+      celsius: this.calCelsius(response.main.temp),
+      temp_max: this.calCelsius(response.main.temp_max),
+      temp_min: this.calCelsius(response.main.temp_min),
+      description: response.weather[0].description
+    })
+    this.getWeatherIcon(this.weatherIcon,response.weather[0].id)
+    
+  }
   calCelsius(temp) {
     let cell = Math.floor(temp - 273.15)
     return cell
   }
 
-  get_WeatherIcon(icons,rangeID) {
+  getWeatherIcon(icons,rangeID) {
     switch(true){
       case rangeID >= 200 && rangeID <= 232: 
         this.setState({
@@ -85,34 +104,22 @@ class App extends React.Component{
       
     }
   }
-  //create a method to get weather,不理解async和await用法
-  getWeather = async() => {
-    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_key}`)
-    const response = await api_call.json()
+  
 
-    console.log(response)
-    
-    this.setState({
-      city: response.name,
-      country: response.sys.country,
-      celsius: this.calCelsius(response.main.temp),
-      temp_max: this.calCelsius(response.main.temp_max),
-      temp_min: this.calCelsius(response.main.temp_min),
-      description: response.weather[0].description
-    })
-    this.get_WeatherIcon(this.weatherIcon,response.weather[0].id)
-  }
+  //获取数据并且处理完后，渲染
   render() {
+    const {city, country, celsius, temp_max,temp_min, description, icon } = this.state
     return (
       <div className="App">
+        <Form></Form>
         <WeatherComp 
-        city = {this.state.city} 
-        country = {this.state.country}
-        temp_celsius = {this.state.celsius}
-        temp_max = {this.state.temp_max}
-        temp_min = {this.state.temp_min}
-        description = {this.state.description}
-        weatherIcon = {this.state.icon}></WeatherComp>
+        city = {city} 
+        country = {country}
+        celsius = {celsius}
+        temp_max = {temp_max}
+        temp_min = {temp_min}
+        description = {description}
+        icon = {icon}></WeatherComp>
       </div>
     )
   }

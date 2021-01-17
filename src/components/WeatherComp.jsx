@@ -1,21 +1,22 @@
 import React from 'react'
 
 function WeatherComp(props) {
+    const {city, country, icon, celsius, temp_max,temp_min, description } = props
     return (
         <div className = "container">
             <div className = "cards">
-                <h1>{props.city}, {props.country}</h1>
+                <h1>{city}, {country}</h1>
 
                 <h5 className = "py-4"> 
-                    <i className = {`wi ${props.weatherIcon} display-1`}></i>
+                    <i className = {`wi ${icon} display-1`}></i>
                 </h5>
 
-                <h1 className = "py-2">{props.temp_celsius} &deg;</h1>
+                <h1 className = "py-2">{celsius} &deg;</h1>
 
                 {/* show max and min temperature */}
-                {minmaxTemp(props.temp_min,props.temp_max)}
+                {minmaxTemp(temp_min,temp_max)}
                 
-                <h4 className="py-3">{props.description}</h4>
+                <h4 className="py-3">{description}</h4>
             </div>
         </div>
     )
