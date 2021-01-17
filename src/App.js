@@ -38,8 +38,13 @@ class App extends React.Component{
   }
 
   //create a method to get weather,不理解async和await用法
-  getWeather = async() => {
-    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=London&appid=${API_key}`)
+  getWeather = async(e) => {
+    e.preventDefault()
+
+    const city = e.target.elements.city.value
+    const country = e.target.elements.country.value
+    if(city) {
+      const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`)
     const response = await api_call.json() //把获得的数据转为JSON格式
 
     console.log(response) //在console看到获取的所有数据
@@ -53,6 +58,11 @@ class App extends React.Component{
       description: response.weather[0].description
     })
     this.getWeatherIcon(this.weatherIcon,response.weather[0].id)
+    } else {
+      this.setState({
+        error: true
+      })
+    }
     
   }
   calCelsius(temp) {
@@ -111,7 +121,7 @@ class App extends React.Component{
     const {city, country, celsius, temp_max,temp_min, description, icon } = this.state
     return (
       <div className="App">
-        <Form loadweather = {this.getWeather}></Form> 
+        <Form loadweather = {this.getWeather} error = {this.state.error}></Form> 
         <WeatherComp 
         city = {city} 
         country = {country}

@@ -4,6 +4,7 @@ import "./form.style.css"
 function Form(props) {
     return (
         <div className = "container">
+            <div>{props.error? error():null}</div>
             <form onSubmit = {props.loadweather}> 
                                                    {/* //点击button时，执行loadweather函数，获取数据 */}
                 <div className="row">
@@ -28,6 +29,13 @@ function Form(props) {
                     </div>
                 </div>
             </form>
+        </div>
+    )
+}
+function error () {
+    return (
+        <div className="alert alert-danger mx-5" role = "alert">
+            Please enter city and country
         </div>
     )
 }
