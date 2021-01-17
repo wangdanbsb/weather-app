@@ -1,11 +1,11 @@
-import logo from './logo.svg';
+
 import './App.css';
+import WeatherComp from './components/WeatherComp';
 
 function App() {
   return (
     <div className="App">
-      <h1>haha</h1>
-      <p>sdfsfsldfds</p>
+      <WeatherComp></WeatherComp>
     </div>
   );
 }
