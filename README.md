@@ -2,6 +2,32 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## aim of this project
+
+By searching city and country and clicking button, the page will display: 
+
+### the first line
+
+city name + country name
+
+### the second line
+
+the picture showing the weather condition
+
+### the third line
+
+the average temperature
+
+### the fourth line
+
+the lowest temperature and the highest temperature
+
+### the fifth line
+
+the detailed description of the weather condition
+
+***
+
 ## Available Scripts
 
 In the project directory, you can run:
