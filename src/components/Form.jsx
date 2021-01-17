@@ -25,7 +25,7 @@ function Form(props) {
                         placeholder = "Country"/>
                     </div>
                     <div className="col-md-3 mt-md-0 text-md-left">
-                        <button className="btn btn-warning">get weather</button>
+                        <button className="btn btn-success">get weather</button>
                     </div>
                 </div>
             </form>
